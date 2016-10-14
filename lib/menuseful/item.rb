@@ -4,7 +4,6 @@ module Menuseful
 
     included do
       helper_method :menu_item
-      hide_action :menu_item
     end
 
     module ClassMethods
