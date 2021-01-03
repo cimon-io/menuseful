@@ -7,12 +7,8 @@ module Menuseful
     end
 
     module ClassMethods
-      def menu_item(*args)
-        item_proc = if block_given?
-                      Proc.new
-                    else
-                      Proc.new { args }
-                    end
+      def menu_item(*args, &block)
+        item_proc = block || proc { content }
         define_method :menu_item do
           @menu_item ||= Item.new(*instance_exec(&item_proc))
         end
