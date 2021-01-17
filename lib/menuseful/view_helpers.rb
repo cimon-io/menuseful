@@ -10,18 +10,14 @@ module Menuseful
       def link_to_menu_if condition, text, url, options={}, &block
         classes = condition ? 'active' : ''
         prefix = options.delete(:prefix)
-        if options.delete(:wrapper) == :none
-          wrapper = -> { content }
-        else
-          options[:class] = (options[:class].to_s.split(' ') << classes).join(' ')
-          wrapper = -> do
-            link_to url, options.merge(title: text) do
-              concat prefix
-              concat content_tag(:span, text)
-            end
+        options[:class] = (options[:class].to_s.split(' ') << classes).join(' ')
+        wrapper = -> do
+          link_to url, options.merge(title: text) do
+            concat prefix
+            concat content_tag(:span, text)
           end
-          wrapper = block if block_given?
         end
+        wrapper = block if block_given?
 
         content_tag :li, (wrapper.call), class: classes
       end
